@@ -31,27 +31,27 @@ This single-file approach makes it easy to copy, review, and place in `scripts/`
 chmod +x devops-toolkit.sh
 
 
-#View help:
+# View help:
 ./devops-toolkit.sh help
 
 
-##Example usages
+## Example usages
 Backup /var/www:
 ./devops-toolkit.sh backup /var/www ./backups/www-$(date +%F).tar.gz
 
-#Disk usage report for /var/www top 10:
+# Disk usage report for /var/www top 10:
 ./devops-toolkit.sh du-report /var/www 10
 
 
-###Add todo:
+### Add todo:
 ./devops-toolkit.sh todo add "Fix Nginx config"
 
 
-###Detect CPU hogs above 40%:
+### Detect CPU hogs above 40%:
 ./devops-toolkit.sh cpu-hog 40
 
 
-##Safety notes
+## Safety notes
 
 The script avoids destructive default actions and demands explicit confirmation for user creation or service restarts (where sensitive).
 
@@ -61,7 +61,7 @@ Do not run as an untrusted user or execute unreviewed deploy hooks. Always inspe
 
 
 
-##License
+## License
 ---
 
 # 2) devops-toolkit.sh (copy this into `devops-toolkit.sh`)
@@ -138,9 +138,9 @@ EOF
 
 version() { echo "$TOOL_NAME $VERSION"; }
 
-# ----------------------------- Tool implementations -----------------------
+## ----------------------------- Tool implementations -----------------------
 
-# 1) calc
+## 1) calc
 calc() {
   if [ $# -eq 0 ]; then
     echo "Calculator: examples:"
@@ -172,7 +172,7 @@ calc() {
   esac
 }
 
-# 2) backup SRC DEST
+## 2) backup SRC DEST
 backup() {
   if [ $# -lt 2 ]; then
     err "Usage: backup SRC_PATH DEST_TAR_GZ"
@@ -190,7 +190,7 @@ backup() {
   log "Backup created: $dest"
 }
 
-# 3) login-tracker [N] OUT
+## 3) login-tracker [N] OUT
 login_tracker() {
   local n="${1:-50}" out="${2:-}"
   require_cmd last
@@ -204,7 +204,7 @@ login_tracker() {
   fi
 }
 
-# 4) du-report DIR TOPN
+## 4) du-report DIR TOPN
 du_report() {
   local dir="${1:-.}" topn="${2:-10}"
   if [ ! -d "$dir" ]; then err "Directory not found: $dir"; return 1; fi
@@ -213,7 +213,7 @@ du_report() {
   du -sh "$dir"/* 2>/dev/null | sort -hr | head -n "$topn"
 }
 
-# 5) todo list: add|list|done|clear
+## 5) todo list: add|list|done|clear
 TODO_FILE="${HOME}/.devops_todo"
 todo_add() {
   local text="$*"
@@ -239,7 +239,7 @@ todo_clear() {
   if confirm "Clear all todos?"; then > "$TODO_FILE"; log "Cleared todos"; else log "Clear cancelled"; fi
 }
 
-# 6) svc-check SERVICE
+## 6) svc-check SERVICE
 svc_check() {
   local svc="$1"
   if [ -z "$svc" ]; then err "Usage: svc-check SERVICE"; return 2; fi
@@ -250,7 +250,7 @@ svc_check() {
   fi
 }
 
-# 7) sys-report [OUTFILE]
+## 7) sys-report [OUTFILE]
 sys_report() {
   local out="${1:-}"
   local tmp
@@ -276,7 +276,7 @@ sys_report() {
   fi
 }
 
-# 8) log-rotate DIR [DAYS]
+## 8) log-rotate DIR [DAYS]
 log_rotate() {
   local dir="${1:-/var/log}" days="${2:-7}"
   if [ ! -d "$dir" ]; then err "Directory not found: $dir"; return 1; fi
@@ -295,7 +295,7 @@ log_rotate() {
   log "Log rotate completed"
 }
 
-# 9) git-deploy REPO_DIR BRANCH [--restart service]
+## 9) git-deploy REPO_DIR BRANCH [--restart service]
 git_deploy() {
   local repo_dir="${1:-}" branch="${2:-main}" restart_flag="${3:-}" restart_svc="${4:-}"
   if [ -z "$repo_dir" ]; then err "Usage: git-deploy REPO_DIR BRANCH [--restart SERVICE]"; return 2; fi
@@ -328,7 +328,7 @@ git_deploy() {
   log "Deploy completed for $repo_dir@$branch"
 }
 
-# 10) cpu-hog [THRESH]
+## 10) cpu-hog [THRESH]
 cpu_hog() {
   local thresh="${1:-30}"
   log "Detecting processes > ${thresh}% CPU"
@@ -377,14 +377,14 @@ esac
 
 
 
-##create repository folder locally (if not already)
+## create repository folder locally (if not already)
 mkdir -p my-devops-scripts && cd my-devops-scripts
 
-# create scripts directory
+## create scripts directory
 mkdir -p scripts
 # Create files with your editor, or use cat <<'EOF' > scripts/devops-toolkit.sh ... EOF to paste
 
-# make script executable
+## make script executable
 chmod +x scripts/devops-toolkit.sh
 
 git init
@@ -396,7 +396,7 @@ git branch -M main
 git remote add origin https://github.com/YOUR-GITHUB-USERNAME/devops-shell-scripts-toolkit.git
 git push -u origin main
 
-###(Replace YOUR-GITHUB-USERNAME with your username.)
+## Replace YOUR-GITHUB-USERNAME with your username.
 
 
 
