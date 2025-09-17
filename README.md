@@ -31,7 +31,7 @@ This single-file approach makes it easy to copy, review, and place in `scripts/`
 chmod +x devops-toolkit.sh
 
 
-# View help:
+# View help: 
 ./devops-toolkit.sh help
 
 
@@ -398,6 +398,16 @@ git push -u origin main
 
 ## Replace YOUR-GITHUB-USERNAME with your username.
 
+
+
+## Final Clean Layout
+# Your repo should look like this:
+
+devops-shell-scripts-toolkit/
+├── README.md
+├── LICENSE
+└── scripts/
+    └── devops-toolkit.sh
 
 
 
